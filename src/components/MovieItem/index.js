@@ -52,13 +52,14 @@ const MovieItem = ({ movie }) => {
     }
     setlikeStatus(value);
     //call api
-    createOrUpdateRateApi({ movie_id: movie._id, rate_status: value }).then(
-      ({ response }) => {
-        if (!response) {
-          setlikeStatus(movie.my_rate_status || 0);
-        }
+    createOrUpdateRateApi({
+      movie_id: movie?._id || movie?.id,
+      rate_status: value,
+    }).then(({ response }) => {
+      if (!response) {
+        setlikeStatus(movie.my_rate_status || 0);
       }
-    );
+    });
   };
 
   return (
@@ -100,7 +101,7 @@ const MovieItem = ({ movie }) => {
               height: "20px",
             }}
           >
-            {console.log(movie?.rate)}
+            {/* {console.log(movie?.rate)} */}
             <Stack alignItems="center" direction="row">
               <Rating
                 size="small"

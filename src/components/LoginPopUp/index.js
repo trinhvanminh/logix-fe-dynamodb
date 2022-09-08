@@ -1,7 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import { Checkbox, Grid, Stack, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  Grid,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import { useEffect, useState } from "react";
@@ -10,6 +17,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { LoginApi, RegisterApi, ResetPasswordApi } from "../../apis/Auth";
+import { baseUrl } from "../../apis/AxiosClient";
+import { ReactComponent as FacebookIcon } from "../../assets/icons/facebook-icon.svg";
+import { ReactComponent as GoogleIcon } from "../../assets/icons/google-icon.svg";
 import { setAuthenticated } from "../../store/Auth";
 import { setIsOpenLoginPopUp, setLoading } from "../../store/Global";
 import CustomButton from "../CustomButton";
@@ -252,9 +262,38 @@ const LoginPopUp = () => {
                     pt: "23px !important",
                   }}
                 >
-                  <CustomButton type="submit" fullWidth>
-                    Sign In
-                  </CustomButton>
+                  <Stack spacing={1}>
+                    <CustomButton type="submit">Login</CustomButton>
+                    <Button
+                      variant="outlined"
+                      startIcon={<GoogleIcon />}
+                      sx={{
+                        bgcolor: "white",
+                        textTransform: "Capitalize",
+                        color: "#3b4045",
+                        ":hover": {
+                          bgcolor: "#f0f8ff",
+                        },
+                      }}
+                      href={`${baseUrl}/api/auth/google`}
+                    >
+                      Log in with Google
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      startIcon={<FacebookIcon />}
+                      sx={{
+                        bgcolor: "#385499",
+                        color: "#fff",
+                        textTransform: "Capitalize",
+                        ":hover": {
+                          bgcolor: "#385499",
+                        },
+                      }}
+                    >
+                      Log in with Facebook
+                    </Button>
+                  </Stack>
                 </Grid>
               </Grid>
             </form>

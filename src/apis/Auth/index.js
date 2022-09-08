@@ -80,3 +80,15 @@ export const ConfirmResetPasswordApi = async ({ new_password1, userToken }) => {
     return { response: null, error: err };
   }
 };
+
+// oauth2
+
+export const getUser = async () => {
+  try {
+    const { data } = await axiosClient.get(`${baseUrl}/api/auth/login/success`);
+    return { response: data, error: null };
+  } catch (err) {
+    toast.error("something went wrong", err);
+    return { response: null, error: err };
+  }
+};
