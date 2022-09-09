@@ -1,12 +1,10 @@
 import { Box, Divider, Grid, Typography } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getUser } from "../../apis/Auth";
 import { getMoviesApi } from "../../apis/Movies";
 import MovieItem from "../MovieItem";
 
 const MovieList = () => {
-  const [user, setUser] = useState(null);
   const isAuthenticated = useSelector((state) => state.Auth.authenticated);
   const [allMovie, setAllMovie] = useState([]);
   const [movies, setMovies] = useState([]);
@@ -21,10 +19,6 @@ const MovieList = () => {
       })
       .catch((err) => console.log(err));
   }, [isAuthenticated]);
-
-  useEffect(() => {
-    getUser().then((res) => console.log(res));
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {

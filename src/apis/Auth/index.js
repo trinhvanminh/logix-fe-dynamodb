@@ -85,7 +85,9 @@ export const ConfirmResetPasswordApi = async ({ new_password1, userToken }) => {
 
 export const getUser = async () => {
   try {
-    const { data } = await axiosClient.get(`${baseUrl}/api/auth/login/success`);
+    const { data } = await axios.get(`${baseUrl}/api/auth/login/success`, {
+      withCredentials: true,
+    });
     return { response: data, error: null };
   } catch (err) {
     toast.error("something went wrong", err);

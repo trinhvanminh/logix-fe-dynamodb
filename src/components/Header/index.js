@@ -11,6 +11,8 @@ import {
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getUser } from "../../apis/Auth";
+import { setAuthenticated } from "../../store/Auth";
 import { setIsOpenLoginPopUp } from "../../store/Global";
 import CustomButton from "../CustomButton";
 import UserMenu from "../UserMenu";
@@ -18,12 +20,23 @@ import UserMenu from "../UserMenu";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [user, setUser] = useState(null);
   const [value, setValue] = useState(1);
   const isAuthenticated = useSelector((state) => state.Auth.authenticated);
   const [scrollTop, setScrollTop] = useState(0);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    getUser().then(({ response }) => {
+      if (response?.user) {
+        setUser(response.user);
+        dispatch(setAuthenticated(true));
+      }
+    });
+  }, [dispatch]);
 
   useEffect(() => {
     const handleBgColorOnScroll = () => {
@@ -118,7 +131,7 @@ const Header = () => {
             }}
           >
             {isAuthenticated ? (
-              <UserMenu />
+              <UserMenu user={user} />
             ) : (
               <CustomButton onClick={() => dispatch(setIsOpenLoginPopUp(true))}>
                 Login

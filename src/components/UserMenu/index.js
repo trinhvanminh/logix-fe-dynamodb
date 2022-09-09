@@ -7,10 +7,11 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { baseUrl } from "../../apis/AxiosClient";
 import { setAuthenticated } from "../../store/Auth";
 import stringAvatar from "../../utils/stringAvatar";
 
-export default function UserMenu() {
+export default function UserMenu({ user }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const id = open ? "profile" : undefined;
@@ -23,7 +24,11 @@ export default function UserMenu() {
   };
   const handleLogout = () => {
     handleClose();
-    localStorage.removeItem("token");
+    if (user?.provider) {
+      window.open(`${baseUrl}/api/auth/logout`, "_self");
+    } else {
+      localStorage.removeItem("token");
+    }
     dispatch(setAuthenticated(false));
   };
   return (
@@ -34,7 +39,9 @@ export default function UserMenu() {
         sx={{ ml: 2 }}
         disableRipple
       >
-        <Avatar {...stringAvatar("Minh")} />
+        <Avatar
+          {...stringAvatar(user?.displayName || user?.username || "Minh")}
+        />
       </IconButton>
       <Menu
         id={id}
