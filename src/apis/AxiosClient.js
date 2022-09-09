@@ -1,7 +1,7 @@
 import axios from "axios";
-export const baseUrl = "http://localhost:4000";
+// export const baseUrl = "http://localhost:4000";
 // export const baseUrl = "https://logix-film.herokuapp.com";
-// export const baseUrl = "https://logix-film-v2.herokuapp.com";
+export const baseUrl = "https://logix-film-v2.herokuapp.com";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
