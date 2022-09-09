@@ -26,9 +26,8 @@ export default function UserMenu({ user }) {
     handleClose();
     if (user?.provider) {
       window.open(`${baseUrl}/api/auth/logout`, "_self");
-    } else {
-      localStorage.removeItem("token");
     }
+    localStorage.removeItem("token");
     dispatch(setAuthenticated(false));
   };
   return (

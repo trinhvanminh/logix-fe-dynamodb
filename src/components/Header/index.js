@@ -33,6 +33,7 @@ const Header = () => {
     getUser().then(({ response }) => {
       if (response?.user) {
         setUser(response.user);
+        localStorage.setItem("token", response.accessToken);
         dispatch(setAuthenticated(true));
       }
     });
