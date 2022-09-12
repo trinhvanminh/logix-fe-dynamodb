@@ -37,7 +37,7 @@ export default function UserMenu({ user }) {
       window.open(`${baseUrl}/api/auth/logout`, "_self");
     }
     localStorage.removeItem("token");
-    // dispatch(setAuthenticated(false));
+    dispatch(setAuthenticated(false));
   };
   return (
     <Box>
