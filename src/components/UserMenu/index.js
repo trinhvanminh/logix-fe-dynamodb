@@ -7,6 +7,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { logoutFbProdiver } from "../../apis/Auth";
 import { baseUrl } from "../../apis/AxiosClient";
 import { setAuthenticated } from "../../store/Auth";
 import stringAvatar from "../../utils/stringAvatar";
@@ -25,10 +26,18 @@ export default function UserMenu({ user }) {
   const handleLogout = () => {
     handleClose();
     if (user?.provider) {
+      // if (user?.provider === "facebook") {
+      //   logoutFbProdiver().then((res) => {
+      //     // window.open(`${baseUrl}/api/auth/logout`, "_self");
+      //     console.log(res);
+      //   });
+      // } else {
+      //   window.open(`${baseUrl}/api/auth/logout`, "_self");
+      // }
       window.open(`${baseUrl}/api/auth/logout`, "_self");
     }
     localStorage.removeItem("token");
-    dispatch(setAuthenticated(false));
+    // dispatch(setAuthenticated(false));
   };
   return (
     <Box>
@@ -39,7 +48,8 @@ export default function UserMenu({ user }) {
         disableRipple
       >
         <Avatar
-          {...stringAvatar(user?.displayName || user?.username || "Minh")}
+          src={user?.picture}
+          {...stringAvatar(user?.displayName || user?.username || "A")}
         />
       </IconButton>
       <Menu

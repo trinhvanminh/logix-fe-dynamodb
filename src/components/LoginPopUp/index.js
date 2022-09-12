@@ -290,6 +290,7 @@ const LoginPopUp = () => {
                           bgcolor: "#385499",
                         },
                       }}
+                      href={`${baseUrl}/api/auth/facebook`}
                     >
                       Log in with Facebook
                     </Button>

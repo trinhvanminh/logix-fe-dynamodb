@@ -83,7 +83,7 @@ export const ConfirmResetPasswordApi = async ({ new_password1, userToken }) => {
 
 // oauth2
 
-export const getUser = async () => {
+export const getOAuthUser = async () => {
   try {
     const { data } = await axios.get(`${baseUrl}/api/auth/login/success`, {
       withCredentials: true,
@@ -91,6 +91,26 @@ export const getUser = async () => {
     return { response: data, error: null };
   } catch (err) {
     toast.error("something went wrong", err);
+    return { response: null, error: err };
+  }
+};
+
+// re authorization
+export const logoutFbProdiver = async () => {
+  try {
+    const token = localStorage.getItem("providerToken");
+    const { data } = await axios.delete(
+      "https://graph.facebook.com/me/permissions",
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    return { response: data, error: null };
+  } catch (err) {
+    toast.error("something went wrong with fb logout", err);
     return { response: null, error: err };
   }
 };

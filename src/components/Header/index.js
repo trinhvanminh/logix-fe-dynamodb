@@ -11,7 +11,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getUser } from "../../apis/Auth";
+import { getOAuthUser } from "../../apis/Auth";
 import { setAuthenticated } from "../../store/Auth";
 import { setIsOpenLoginPopUp } from "../../store/Global";
 import CustomButton from "../CustomButton";
@@ -30,11 +30,20 @@ const Header = () => {
   };
 
   useEffect(() => {
-    getUser().then(({ response }) => {
+    getOAuthUser().then(({ response }) => {
       if (response?.user) {
         setUser(response.user);
         localStorage.setItem("token", response.accessToken);
+        localStorage.setItem(
+          "providerToken",
+          response.user.providerAccessToken
+        );
         dispatch(setAuthenticated(true));
+      } else {
+        setUser(null);
+        localStorage.removeItem("token");
+        localStorage.removeItem("providerToken");
+        dispatch(setAuthenticated(false));
       }
     });
   }, [dispatch]);
